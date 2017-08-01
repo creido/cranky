@@ -53,11 +53,19 @@ const pause = () => {
 };
 
 const goFaster = () => {
-    spin.playbackRate += 0.1;
+    if (spin.playState === 'paused') {
+        play();
+    } else {
+        spin.playbackRate += 0.1;
+    }
 };
 
 const goSlower = () => {
-    spin.playbackRate -= 0.1;
+    if (spin.playbackRate >= 0.2) {
+        spin.playbackRate -= 0.1;
+    } else {
+        pause();
+    }
 };
 
 
