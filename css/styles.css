@@ -1,0 +1,34 @@
+main {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.chainring {
+    border-radius: 500em;
+    border: 20px solid red;
+    height: 100px;
+    position: relative;
+    width: 100px;
+}
+
+.crank {
+    background: blue;
+    height: 15px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 140px;
+}
+
+.pedal {
+    background: black;
+    height: 15px;
+    right: 0;
+    position: absolute;
+    top: 0;
+    transform: translate(50%, -50%);
+    width: 50px;
+}
