@@ -1,9 +1,9 @@
-const duration = 1000;
+const duration = 3000;
 const iterations = Infinity;
 
 const crank = document.querySelector('.crank');
 const chainring = document.querySelector('.chainring');
-const pedal = document.querySelector('.pedal');
+const pedals = document.querySelectorAll('.pedal');
 
 const btnPlay = document.querySelector('.btn--play');
 const btnPause = document.querySelector('.btn--pause');
@@ -26,21 +26,23 @@ const spin = chainring.animate([
     // easing: 'linear'
 });
 
-pedal.animate([
-    {transform: 'rotate(0)'},
-    {transform: 'rotate(-360deg)'}
-],
-{
-    // delay: 500,
-    // endDelay: 0,
-    // fill: 'both',
-    // iterationStart: 0,
-    iterations: iterations,
-    duration: duration,
-    // direction: 'normal',
-    // easing: 'cubic-bezier(.6, 0, 1, .6)'
-    // easing: 'linear'
-}); 
+pedals.forEach(pedal => {
+    pedal.animate([
+        {transform: 'translate(50%, -50%) rotate(0)'},
+        {transform: 'translate(50%, -50%) rotate(-360deg)'}
+    ],
+    {
+        // delay: 500,
+        // endDelay: 0,
+        // fill: 'both',
+        // iterationStart: 0,
+        iterations: iterations,
+        duration: duration,
+        // direction: 'normal',
+        // easing: 'cubic-bezier(.6, 0, 1, .6)'
+        // easing: 'linear'
+    }); 
+});
 
 const play = () => {
     spin.play();

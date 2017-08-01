@@ -11,24 +11,39 @@ main {
     height: 100px;
     position: relative;
     width: 100px;
+    z-index: 3;
 }
 
 .crank {
-    background: blue;
     height: 15px;
-    left: 50%;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: 140px;
 }
 
+.crank--left {
+    background: cyan;
+    left: 50%;
+}
+
+.crank--right {
+    background: blue;
+    right: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    z-index: -1;
+}
+
 .pedal {
-    background: black;
+    background: rgba(0,0,0,0.5);
     height: 15px;
-    right: 0;
     position: absolute;
-    top: 0;
-    transform: translate(50%, -50%);
+    right: 0;
+    top: 50%;
+    transform-origin: 50% 50%;
     width: 50px;
+}
+
+.crank--right .pedal {
+    z-index: -2;
 }
