@@ -2,46 +2,40 @@ const duration = 3000;
 const iterations = Infinity;
 
 const crank = document.querySelector('.crank');
-const chainring = document.querySelector('.chainring');
+const chainring = document.querySelector('.drive-train');
 const pedals = document.querySelectorAll('.pedal');
 
 const btnPlay = document.querySelector('.btn--play');
 const btnPause = document.querySelector('.btn--pause');
 const btnSpeedUp = document.querySelector('.btn--speed-up');
 const btnSpeedDown = document.querySelector('.btn--speed-down');
+const btnStop = document.querySelector('.btn--stop');
+const timeline = document.timeline;
 
-const spin = chainring.animate([
-    {transform: 'rotate(0)'},
-    {transform: 'rotate(360deg)'}
-],
-{
-    // delay: 500,
-    // endDelay: 0,
-    // fill: 'both',
-    // iterationStart: 0,
+const effect = [
+    {
+        transform: 'rotate(0)'
+    },
+    {
+        transform: 'rotate(360deg)'
+    }
+];
+const options = {
     iterations: iterations,
     duration: duration,
-    // direction: 'normal',
-    // easing: 'cubic-bezier(.6, 0, 1, .6)'
-    // easing: 'linear'
-});
+};
+
+// KeyframeEffect not native currently
+// const keyframes = new KeyframeEffect(chainring, effect, options);
+// const spin = new Animation(keyframes, timeline);
+
+const spin = chainring.animate(effect, options);
 
 pedals.forEach(pedal => {
     pedal.animate([
-        {transform: 'translate(50%, -50%) rotate(0)'},
-        {transform: 'translate(50%, -50%) rotate(-360deg)'}
-    ],
-    {
-        // delay: 500,
-        // endDelay: 0,
-        // fill: 'both',
-        // iterationStart: 0,
-        iterations: iterations,
-        duration: duration,
-        // direction: 'normal',
-        // easing: 'cubic-bezier(.6, 0, 1, .6)'
-        // easing: 'linear'
-    }); 
+        {transform: 'rotate(0)'},
+        {transform: 'rotate(-360deg)'}
+    ], options);
 });
 
 const play = () => {
@@ -50,6 +44,10 @@ const play = () => {
 
 const pause = () => {
     spin.pause();
+};
+
+const stop = () => {
+    spin.cancel();
 };
 
 const goFaster = () => {
@@ -70,13 +68,11 @@ const goSlower = () => {
 
 
 const init = () => {
-
-    // element.animate(effect, options);
-
     btnPlay.addEventListener('click', play, false);
     btnPause.addEventListener('click', pause, false);
     btnSpeedUp.addEventListener('click', goFaster, false);
     btnSpeedDown.addEventListener('click', goSlower, false);
+    btnStop.addEventListener('click', stop, false);
 };
 
 
