@@ -12,62 +12,82 @@ const btnSpeedDown = document.querySelector('.btn--speed-down');
 const btnStop = document.querySelector('.btn--stop');
 const timeline = document.timeline;
 
-const effect = [
-    {
-        transform: 'rotate(0)'
-    },
-    {
-        transform: 'rotate(360deg)'
-    }
+const effects = [
+    {transform: 'rotate(0)'},
+    {transform: 'rotate(360deg)'},
 ];
+
 const options = {
     iterations: iterations,
     duration: duration,
 };
+// const options2 = {
+//     iterations: iterations,
+//     duration: duration,
+//     direction: 'reverse',
+// };
 
-// KeyframeEffect not native currently
-// const keyframes = new KeyframeEffect(chainring, effect, options);
+// TODO: Add polyfills
+//  - KeyframeEffect
+//
+// const keyframes = new KeyframeEffect(chainring, effects, options);
 // const spin = new Animation(keyframes, timeline);
+const animations = [];
 
-const spin = chainring.animate(effect, options);
+const spin = chainring.animate(effects, options);
+
+animations.push(spin);
 
 pedals.forEach(pedal => {
-    pedal.animate([
-        {transform: 'rotate(0)'},
-        {transform: 'rotate(-360deg)'}
-    ], options);
+    const pedalOptions = Object.assign({}, options, {
+        direction: 'reverse'
+    });
+    animations.push(pedal.animate(effects, pedalOptions));
 });
 
+// animations.forEach(anim => {
+// });
+
 const play = () => {
-    spin.play();
+    animations.forEach(anim => {
+        anim.play();
+    });
 };
 
 const pause = () => {
-    spin.pause();
+    animations.forEach(anim => {
+        anim.pause();
+    });
 };
 
 const stop = () => {
-    spin.cancel();
+    animations.forEach(anim => {
+        anim.cancel();
+    });
 };
 
 const goFaster = () => {
     if (spin.playState === 'paused') {
         play();
     } else {
-        spin.playbackRate += 0.1;
+        animations.forEach(anim => {
+            anim.playbackRate += 0.1;
+        });
     }
 };
 
 const goSlower = () => {
     if (spin.playbackRate >= 0.2) {
-        spin.playbackRate -= 0.1;
+        animations.forEach(anim => {
+            anim.playbackRate -= 0.1;
+        });
     } else {
         pause();
     }
 };
 
 
-const init = () => {
+const initListeners = () => {
     btnPlay.addEventListener('click', play, false);
     btnPause.addEventListener('click', pause, false);
     btnSpeedUp.addEventListener('click', goFaster, false);
@@ -76,4 +96,4 @@ const init = () => {
 };
 
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', initListeners);
