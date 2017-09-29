@@ -1,0 +1,130 @@
+body {
+    margin: 0;
+}
+
+main {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+svg {
+    max-width: 100%;
+}
+
+// .drive-train {
+//     position: relative;
+//     width: 80%;
+// }
+
+.drive {
+    transform-origin: 389.5px 224.5px;
+}
+
+.cassette {    
+    height: 60px;
+    right: 0;
+    position: absolute;
+    top: 0;
+    width: 60px;
+}
+
+// .sprocket {
+//     border: 1px solid green;
+//     border-radius: 500em;
+//     left: 50%;
+//     position: absolute;
+//     top: 50%;
+//     transform: translate(-50%, -50%);
+// }
+
+.chainring {
+    border-radius: 500em;
+    border: 20px solid red;
+    height: 140px;
+    width: 140px;
+}
+
+// .sprocket-28 { height: 60px; width: 60px; }
+// .sprocket-25 { height: 57px; width: 57px; }
+// .sprocket-23 { height: 54px; width: 54px; }
+// .sprocket-21 { height: 51px; width: 51px; }
+// .sprocket-19 { height: 48px; width: 48px; }
+// .sprocket-17 { height: 45px; width: 45px; }
+// .sprocket-15 { height: 42px; width: 42px; }
+// .sprocket-14 { height: 39px; width: 39px; }
+// .sprocket-13 { height: 36px; width: 36px; }
+// .sprocket-12 { height: 33px; width: 33px; }
+// .sprocket-11 { height: 30px; width: 30px; }
+
+// .sprocket-52 { height: 140px; width: 140px;}
+// .sprocket-36 { border-color: #c00; height: 120px; width: 120px;}
+
+
+
+.chainring:after {
+    background: black;
+    border-radius: 5em;
+    content: '';
+    display: block;
+    height: 15px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    z-index: 2;
+}
+
+.crank {
+    height: 15px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 140px;
+}
+
+.crank--left {
+    background: cyan;
+    left: 50%;
+    z-index: 1;
+}
+
+.crank--right {
+    background: blue;
+    right: 50%;
+    transform:
+        translateY(-50%)
+        rotate(180deg);
+    z-index: -1;
+}
+
+.pedal-pivot {
+    // background: rgba(255,0,0,0.5);
+    height: 15px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 50px;
+}
+
+.crank--left .pedal-pivot {
+    transform: translate(50%, -50%);
+}
+
+.crank--right .pedal-pivot {
+    transform: translate(50%, -50%) rotate(180deg);
+}
+
+.pedal {
+    background: rgba(0,0,0,0.5);
+    border-radius: 0 0 20px 10px;
+    height: 100%;
+    transform-origin: 50% 50%;
+    width: 100%;
+}
+
+.crank--right .pedal {
+    z-index: -2;
+}
