@@ -2,7 +2,7 @@ const duration = 3000;
 const iterations = Infinity;
 
 const crank = document.querySelector('.crank');
-const chainring = document.querySelector('.drive-train');
+const drive = document.querySelector('.drive');
 const pedals = document.querySelectorAll('.pedal');
 
 const btnPlay = document.querySelector('.btn--play');
@@ -30,11 +30,11 @@ const options = {
 // TODO: Add polyfills
 //  - KeyframeEffect
 //
-// const keyframes = new KeyframeEffect(chainring, effects, options);
+// const keyframes = new KeyframeEffect(drive, effects, options);
 // const spin = new Animation(keyframes, timeline);
 const animations = [];
 
-const spin = chainring.animate(effects, options);
+const spin = drive.animate(effects, options);
 
 animations.push(spin);
 

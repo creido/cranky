@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 main {
     align-items: center;
     display: flex;
@@ -5,16 +9,59 @@ main {
     height: 100vh;
 }
 
-.drive-train {
-    position: relative;
+svg {
+    max-width: 100%;
 }
+
+// .drive-train {
+//     position: relative;
+//     width: 80%;
+// }
+
+.drive {
+    transform-origin: 389.5px 224.5px;
+}
+
+.cassette {    
+    height: 60px;
+    right: 0;
+    position: absolute;
+    top: 0;
+    width: 60px;
+}
+
+// .sprocket {
+//     border: 1px solid green;
+//     border-radius: 500em;
+//     left: 50%;
+//     position: absolute;
+//     top: 50%;
+//     transform: translate(-50%, -50%);
+// }
 
 .chainring {
     border-radius: 500em;
     border: 20px solid red;
-    height: 100px;
-    width: 100px;
+    height: 140px;
+    width: 140px;
 }
+
+// .sprocket-28 { height: 60px; width: 60px; }
+// .sprocket-25 { height: 57px; width: 57px; }
+// .sprocket-23 { height: 54px; width: 54px; }
+// .sprocket-21 { height: 51px; width: 51px; }
+// .sprocket-19 { height: 48px; width: 48px; }
+// .sprocket-17 { height: 45px; width: 45px; }
+// .sprocket-15 { height: 42px; width: 42px; }
+// .sprocket-14 { height: 39px; width: 39px; }
+// .sprocket-13 { height: 36px; width: 36px; }
+// .sprocket-12 { height: 33px; width: 33px; }
+// .sprocket-11 { height: 30px; width: 30px; }
+
+// .sprocket-52 { height: 140px; width: 140px;}
+// .sprocket-36 { border-color: #c00; height: 120px; width: 120px;}
+
+
 
 .chainring:after {
     background: black;
