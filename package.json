@@ -1,0 +1,13 @@
+{
+  "name": "cranky",
+  "version": "1.0.0",
+  "description": "Web Animations API demo of bicycle drive train",
+  "scripts": {
+    "start": "autoreload-server -w '**/**.{html,css,js}' ./src 8008"
+  },
+  "author": "Chris Reid",
+  "license": "MIT",
+  "devDependencies": {
+    "simple-autoreload-server": "0.2.7"
+  }
+}
