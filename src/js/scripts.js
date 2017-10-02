@@ -2,15 +2,14 @@
 const duration = 60000;
 const iterations = Infinity;
 
-const crank = document.querySelector('.crank');
 const drive = document.querySelector('.drive');
 const pedals = document.querySelectorAll('.pedal');
+const creidometer = document.querySelector('.creidometer');
 
 const btnPlay = document.querySelector('.btn--play');
 const btnPause = document.querySelector('.btn--pause');
-const btnSpeedUp = document.querySelector('.btn--speed-up');
-const btnSpeedDown = document.querySelector('.btn--speed-down');
 const btnStop = document.querySelector('.btn--stop');
+const rangeSpeed = document.querySelector('.range-speed');
 const timeline = document.timeline;
 
 const effects = [
@@ -68,33 +67,24 @@ const stop = () => {
     });
 };
 
-const goFaster = () => {
-    if (spin.playState === 'paused') {
-        play();
-    } else {
-        animations.forEach(anim => {
-            anim.playbackRate += 0.1;
-        });
-    }
-};
+const setSpeed = (range) => {
+    console.log('setSpeed', range.target.value);
 
-const goSlower = () => {
-    if (spin.playbackRate >= 0.2) {
-        animations.forEach(anim => {
-            anim.playbackRate -= 0.1;
-        });
-    } else {
-        pause();
-    }
+    const speed = range.target.value;
+
+    animations.forEach(anim => {
+        anim.playbackRate = speed;
+    });
+
+    creidometer.innerHTML = speed;
 };
 
 
 const initListeners = () => {
     btnPlay.addEventListener('click', play, false);
     btnPause.addEventListener('click', pause, false);
-    btnSpeedUp.addEventListener('click', goFaster, false);
-    btnSpeedDown.addEventListener('click', goSlower, false);
     btnStop.addEventListener('click', stop, false);
+    rangeSpeed.addEventListener('change', setSpeed.bind(this), false);
 };
 
 
