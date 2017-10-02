@@ -15,8 +15,10 @@ const derailleurRear = document.querySelector('.derailleur-rear');
 const rangeSpeed = document.querySelector('.range-speed');
 const timeline = document.timeline;
 
-const front = [36, 52];
-const rear = [28, 25, 23, 21, 19, 17, 15, 14, 13, 12, 11];
+const gears = {
+    front: [36, 52],
+    rear: [28, 25, 23, 21, 19, 17, 15, 14, 13, 12, 11]
+};
 
 const effects = [
     {transform: 'rotate(0)'},
@@ -57,37 +59,32 @@ pedals.forEach(pedal => {
     driveAnimations.push(pedalMotion);
 });
 
-const getFrontGear = () => {
-    const a = parseInt(derailleurFront.value, 10) - 1;
+const getGearSize = (location) => {
+    const derailleur = document.querySelector(`.derailleur-${location}`);
+    const index = parseInt(derailleur.value, 10) - 1;
 
-    return front[a];
-};
-
-const getRearGear = () => {
-    const a = parseInt(derailleurRear.value, 10) - 1;
-
-    return rear[a];
+    return gears[location][index];
 };
 
 const getCadence = () => {
     return rangeSpeed.value;
 };
 
-const getPlaybackRatio = () => {
-    const gearFront = getFrontGear();
-    const gearRear = getRearGear();
+const getOutputPlaybackRate = () => {
+    const gearFront = getGearSize('front');
+    const gearRear = getGearSize('rear');
     const currentCadence = getCadence();
 
-    console.log('getPlaybackRatio', gearFront, gearRear, currentCadence);
+    console.log('getOutputPlaybackRate', gearFront, gearRear, currentCadence);
 
-    wheelSpeed.playbackRate = (gearFront / gearRear) * currentCadence;
+    wheelMotion.playbackRate = (gearFront / gearRear) * currentCadence;
 };
 
 const initWheel = () => {
     const pbr = getCadence(1);
 
-    wheelSpeed.playbackRate = pbr;
-    animations.push(wheelSpeed);
+    wheelMotion.playbackRate = pbr;
+    animations.push(wheelMotion);
 };
 
 const play = () => {
@@ -111,18 +108,18 @@ const stop = () => {
 const setRPM = (range) => {
     console.log('setRPM', range.target.value);
 
-    const speed = range.target.value;
+    const rpm = range.target.value;
 
     driveAnimations.forEach(anim => {
-        anim.playbackRate = speed;
+        anim.playbackRate = rpm;
     });
 
-    getPlaybackRatio();
+    getOutputPlaybackRate();
 
-    creidometer.innerHTML = speed;
+    creidometer.innerHTML = rpm;
 };
 
-const wheelSpeed = wheel.animate(effects, options);
+const wheelMotion = wheel.animate(effects, options);
 
 initWheel();
 
@@ -130,8 +127,8 @@ const initListeners = () => {
     btnPlay.addEventListener('click', play, false);
     btnPause.addEventListener('click', pause, false);
     btnStop.addEventListener('click', stop, false);
-    derailleurFront.addEventListener('change', getPlaybackRatio, false);
-    derailleurRear.addEventListener('change', getPlaybackRatio, false);
+    derailleurFront.addEventListener('change', getOutputPlaybackRate, false);
+    derailleurRear.addEventListener('change', getOutputPlaybackRate, false);
     rangeSpeed.addEventListener('change', setRPM.bind(this), false);
 };
 
