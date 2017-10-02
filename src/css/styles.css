@@ -17,12 +17,7 @@ svg {
     max-width: 100%;
 }
 
-// .drive-train {
-//     position: relative;
-//     width: 80%;
-// }
-
-.drive {
+.cranks {
     transform-origin: 389.5px 224.5px;
 }
 

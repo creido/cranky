@@ -2,7 +2,7 @@
 const duration = 60000;
 const iterations = Infinity;
 
-const drive = document.querySelector('.drive');
+const cranks = document.querySelector('.cranks');
 const pedals = document.querySelectorAll('.pedal');
 const wheel = document.querySelector('.wheel');
 const creidometer = document.querySelector('.creidometer');
@@ -37,20 +37,24 @@ const options = {
 // TODO: Add polyfills
 //  - KeyframeEffect
 //
-// const keyframes = new KeyframeEffect(drive, effects, options);
-// const spin = new Animation(keyframes, timeline);
+// const keyframes = new KeyframeEffect(cranks, effects, options);
+// const crankMotion = new Animation(keyframes, timeline);
 const animations = [];
+const driveAnimations = [];
 
-const spin = drive.animate(effects, options);
+const crankMotion = cranks.animate(effects, options);
 
-animations.push(spin);
+driveAnimations.push(crankMotion);
+animations.push(crankMotion);
 
 pedals.forEach(pedal => {
     const pedalOptions = Object.assign({}, options, {
         direction: 'reverse'
     });
+    const pedalMotion = pedal.animate(effects, pedalOptions);
 
-    animations.push(pedal.animate(effects, pedalOptions));
+    animations.push(pedalMotion);
+    driveAnimations.push(pedalMotion);
 });
 
 const getFrontGear = () => {
@@ -83,7 +87,7 @@ const initWheel = () => {
     const pbr = getCadence(1);
 
     wheelSpeed.playbackRate = pbr;
-    // animations.push(wheelSpeed);
+    animations.push(wheelSpeed);
 };
 
 const play = () => {
@@ -104,12 +108,12 @@ const stop = () => {
     });
 };
 
-const setSpeed = (range) => {
-    console.log('setSpeed', range.target.value);
+const setRPM = (range) => {
+    console.log('setRPM', range.target.value);
 
     const speed = range.target.value;
 
-    animations.forEach(anim => {
+    driveAnimations.forEach(anim => {
         anim.playbackRate = speed;
     });
 
@@ -128,7 +132,7 @@ const initListeners = () => {
     btnStop.addEventListener('click', stop, false);
     derailleurFront.addEventListener('change', getPlaybackRatio, false);
     derailleurRear.addEventListener('change', getPlaybackRatio, false);
-    rangeSpeed.addEventListener('change', setSpeed.bind(this), false);
+    rangeSpeed.addEventListener('change', setRPM.bind(this), false);
 };
 
 document.addEventListener('DOMContentLoaded', initListeners);
