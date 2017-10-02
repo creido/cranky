@@ -1,4 +1,5 @@
-const duration = 3000;
+// initial playback rate set to 1 RPM 
+const duration = 60000;
 const iterations = Infinity;
 
 const crank = document.querySelector('.crank');
