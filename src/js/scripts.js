@@ -83,7 +83,7 @@ const initWheel = () => {
     const pbr = getCadence(1);
 
     wheelSpeed.playbackRate = pbr;
-    animations.push(wheelSpeed);
+    // animations.push(wheelSpeed);
 };
 
 const play = () => {
@@ -112,6 +112,8 @@ const setSpeed = (range) => {
     animations.forEach(anim => {
         anim.playbackRate = speed;
     });
+
+    getPlaybackRatio();
 
     creidometer.innerHTML = speed;
 };
