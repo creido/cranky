@@ -1,19 +1,17 @@
 // initial playback rate set to 1 RPM 
 const duration = 60000;
 const iterations = Infinity;
+const timeline = document.timeline;
 
 const cranks = document.querySelector('.cranks');
 const pedals = document.querySelectorAll('.pedal');
 const wheel = document.querySelector('.wheel');
 const creidometer = document.querySelector('.creidometer');
 
-const btnPlay = document.querySelector('.btn--play');
-const btnPause = document.querySelector('.btn--pause');
-const btnStop = document.querySelector('.btn--stop');
+const btns = document.querySelectorAll('.btn');
 const derailleurFront = document.querySelector('.derailleur-front');
 const derailleurRear = document.querySelector('.derailleur-rear');
 const rangeSpeed = document.querySelector('.range-speed');
-const timeline = document.timeline;
 
 const gears = {
     front: [36, 52],
@@ -93,25 +91,25 @@ const initWheel = () => {
     animations.push(wheelMotion);
 };
 
-const play = () => {
+const buttonHandler = event => {
+    // const anims = document.getAnimations ? document.getAnimations() : timeline.getAnimations();
+
     animations.forEach(anim => {
-        anim.play();
+        switch (event.target.innerHTML.toLowerCase()) {
+            case 'play':
+                anim.play();
+                break;
+            case 'pause':
+                anim.pause();
+                break;
+            case 'stop':
+                anim.cancel();
+                break;
+        };
     });
 };
 
-const pause = () => {
-    animations.forEach(anim => {
-        anim.pause();
-    });
-};
-
-const stop = () => {
-    animations.forEach(anim => {
-        anim.cancel();
-    });
-};
-
-const setCadence = (range) => {
+const setCadence = range => {
     console.log('setRPM', range.target.value);
 
     const rpmIn = range.target.value;
@@ -136,7 +134,7 @@ const setRPM = (originalEvent, input) => {
         Speed: ${outputSpeed} kmh`;
 };
 
-const getSpeed = (rate) => {
+const getSpeed = rate => {
     const kmph = ((rate * wheelCircumference) / 1000) * 60;
 
     return kmph.toFixed(2);
@@ -148,9 +146,9 @@ initWheel();
 setRPM();
 
 const initListeners = () => {
-    btnPlay.addEventListener('click', play, false);
-    btnPause.addEventListener('click', pause, false);
-    btnStop.addEventListener('click', stop, false);
+    btns.forEach(btn => {
+        btn.addEventListener('click', buttonHandler.bind(this), false);
+    });
     derailleurFront.addEventListener('change', setRPM, false);
     derailleurRear.addEventListener('change', setRPM, false);
     rangeSpeed.addEventListener('change', setCadence.bind(this), false);
