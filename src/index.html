@@ -10,23 +10,26 @@
 
 	<!-- Demo of web animations API -->
 	<header>
+		<span class="creidometer"></span>
 		<button class="btn btn--play">Play</button>
 		<button class="btn btn--pause">Pause</button>
 		<button class="btn btn--stop">Stop</button>
 		<input class="range-speed" type="range" min="0" max="200" value="1">
-		<span class="creidometer"></span>
 
 		<div class="gears">
+			<strong>Gears:</strong>
 			<label for="derailleur_front">Front</label>
-			<input type="number" id="derailleur_front" class="derailleur-front" min="1" max="2" value="1">
+			<input type="number" id="derailleur_front" class="derailleur derailleur-front" min="1" max="2" value="1" data-size="">
+			<span class="gear-front gear"></span>
 
 			<label for="derailleur_rear">Rear</label>
-			<input type="number" id="derailleur_rear" class="derailleur-rear" min="1" max="11" value="1">
+			<input type="number" id="derailleur_rear" class="derailleur derailleur-rear" min="1" max="11" value="1" data-size="">
+			<span class="gear-rear gear"></span>
 		</div>
+		<!-- <code>&lt;fact&gt; Manfred Nüscheler - static bike max cadence <strong>271 rpm</strong> &lt;/fact&gt;</code> -->
 	</header>
 
 	<main>
-		<fact>Manfred Nüscheler - static bike max cadence <strong>271 rpm</strong></fact>
 
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 530 360">
 			<g class="wheel">

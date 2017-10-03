@@ -1,8 +1,47 @@
+html {
+    font-size: 62.5%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
+    font: 1.6rem/1.8 Arial, sans-serif;
     margin: 0;
 }
 
+button,
+input {
+    font-size: 1.6rem;
+}
+
+header {
+    padding: 2em;
+}
+
+.creidometer {
+    float: right;
+}
+
+.derailleur {
+    height: 3em;
+    padding: 0.5em;
+    width: 5em;
+}
+
+.gear {
+    margin-right: 2em;
+}
+
+.range-speed {
+    height: 2em;
+    padding: 0.5em 0;
+    width: 100%;
+}
+
 svg {
+    max-height: 75vh;
     max-width: 100%;
 }
 
@@ -18,71 +57,121 @@ svg {
     transform-origin: 50% 50%;
 }
 
-.range-speed {
-    width: 100%;
-}
-
 
 /**
  * 
  */
 
 .sprocket {
-    fill: #999999; stroke: #000000; stroke-width: 0.05;
+    fill: #999999;
+    stroke: #000000;
+    stroke-width: 0.05;
 }
 
 .spoke {
-    fill: none; stroke: #B3B3B3; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10;
+    fill: none;
+    stroke: #b3b3b3;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
 }
 
 .st0 {
-    fill: #999999; stroke: #B3B3B3; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 10;
+    fill: #999999;
+    stroke: #b3b3b3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
 }
+
 .spokes {
-    fill: none; stroke: #B3B3B3; stroke-width: 8;
+    fill: none;
+    stroke: #b3b3b3;
+    stroke-width: 8;
 }
+
 .st2 {
-    fill: #DEDEDD; stroke: #000000; stroke-width: 0.05;
+    fill: #dededd;
+    stroke: #000000;
+    stroke-width: 0.05;
 }
+
 .wheel-disc {
     fill: #555;
 }
+
 .wheel-disc-circle {
     fill: #787878;
 }
+
 .tyre {
-    fill: none; stroke: #000000; stroke-width: 7.1234;
+    fill: none;
+    stroke: #000000;
+    stroke-width: 7.1234;
 }
+
 .rim {
-    fill: none; stroke: #333333; stroke-width: 3.9428;
+    fill: none;
+    stroke: #333333;
+    stroke-width: 3.9428;
 }
+
 .st5 {
-    fill: none; stroke: #FFFFFF;
+    fill: none;
+    stroke: #ffffff;
 }
+
 .st6 {
-    fill: none; stroke: #000000; stroke-width: 0.05;
+    fill: none;
+    stroke: #000000;
+    stroke-width: 0.05;
 }
+
 .st7 {
-    fill: none; stroke: #312BBC;
+    fill: none;
+    stroke: #312bbc;
 }
+
 .st8 {
-    fill: #EDEEF0; stroke: #000000; stroke-width: 0.05;
+    fill: #edeef0;
+    stroke: #000000;
+    stroke-width: 0.05;
 }
+
 .st9 {
-    fill: #1A00B5; stroke: #000000; stroke-width: 0.05; stroke-linecap: round; stroke-linejoin: round;
+    fill: #1a00b5;
+    stroke: #000000;
+    stroke-width: 0.05;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
+
 .st10 {
-    fill: none; stroke: #332EBD;
+    fill: none;
+    stroke: #332ebd;
 }
+
 .st11 {
-    fill: #C2C1C1; stroke: #000000; stroke-width: 0.05;
+    fill: #c2c1c1;
+    stroke: #000000;
+    stroke-width: 0.05;
 }
+
 .st12 {
-    fill: #00222B; stroke: #000000; stroke-width: 0.1732;
+    fill: #00222b;
+    stroke: #000000;
+    stroke-width: 0.1732;
 }
+
 .st13 {
-    fill: #E3DEDB; stroke: #000000; stroke-width: 0.1732;
+    fill: #e3dedb;
+    stroke: #000000;
+    stroke-width: 0.1732;
 }
+
 .st14 {
-    fill: #333333; stroke: #000000; stroke-width: 0.1732;
+    fill: #333333;
+    stroke: #000000;
+    stroke-width: 0.1732;
 }

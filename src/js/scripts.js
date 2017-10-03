@@ -20,6 +20,8 @@ const gears = {
     rear: [28, 25, 23, 21, 19, 17, 15, 14, 13, 12, 11]
 };
 
+const wheelCircumference = 2.096;
+
 const effects = [
     {transform: 'rotate(0)'},
     {transform: 'rotate(360deg)'},
@@ -61,9 +63,13 @@ pedals.forEach(pedal => {
 
 const getGearSize = (location) => {
     const derailleur = document.querySelector(`.derailleur-${location}`);
+    const gear = document.querySelector(`.gear-${location}`);
     const index = parseInt(derailleur.value, 10) - 1;
+    const size = gears[location][index];
 
-    return gears[location][index];
+    gear.innerHTML = `(${size} teeth)`;
+
+    return size;
 };
 
 const getCadence = () => {
@@ -77,7 +83,7 @@ const getOutputPlaybackRate = () => {
 
     console.log('getOutputPlaybackRate', gearFront, gearRear, currentCadence);
 
-    wheelMotion.playbackRate = (gearFront / gearRear) * currentCadence;
+    return (gearFront / gearRear) * currentCadence;
 };
 
 const initWheel = () => {
@@ -105,31 +111,49 @@ const stop = () => {
     });
 };
 
-const setRPM = (range) => {
+const setCadence = (range) => {
     console.log('setRPM', range.target.value);
 
-    const rpm = range.target.value;
+    const rpmIn = range.target.value;
 
     driveAnimations.forEach(anim => {
-        anim.playbackRate = rpm;
+        anim.playbackRate = rpmIn;
     });
 
-    getOutputPlaybackRate();
+    setRPM(null, rpmIn);
+};
 
-    creidometer.innerHTML = rpm;
+const setRPM = (originalEvent, input) => {
+    console.log('setRPM', input);
+    const rpmIn = input || getCadence();
+    const rpmOut = getOutputPlaybackRate();
+    const outputSpeed = getSpeed(rpmOut);
+    
+    wheelMotion.playbackRate = rpmOut;
+
+    creidometer.innerHTML = `Input: ${rpmIn} RPM,
+        Output: ${rpmOut.toFixed(2)} RPM,
+        Speed: ${outputSpeed} kmh`;
+};
+
+const getSpeed = (rate) => {
+    const kmph = ((rate * wheelCircumference) / 1000) * 60;
+
+    return kmph.toFixed(2);
 };
 
 const wheelMotion = wheel.animate(effects, options);
 
 initWheel();
+setRPM();
 
 const initListeners = () => {
     btnPlay.addEventListener('click', play, false);
     btnPause.addEventListener('click', pause, false);
     btnStop.addEventListener('click', stop, false);
-    derailleurFront.addEventListener('change', getOutputPlaybackRate, false);
-    derailleurRear.addEventListener('change', getOutputPlaybackRate, false);
-    rangeSpeed.addEventListener('change', setRPM.bind(this), false);
+    derailleurFront.addEventListener('change', setRPM, false);
+    derailleurRear.addEventListener('change', setRPM, false);
+    rangeSpeed.addEventListener('change', setCadence.bind(this), false);
 };
 
 document.addEventListener('DOMContentLoaded', initListeners);
