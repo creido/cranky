@@ -20,46 +20,50 @@ const gears = {
 
 const wheelCircumference = 2.096;
 
-const effects = [
+const keyframes = [
     {transform: 'rotate(0)'},
     {transform: 'rotate(360deg)'},
 ];
+
+// const keyframesCycle = new KeyframeEffect(element, effect, options);
 
 const options = {
     iterations: iterations,
     duration: duration,
 };
 
-// const options2 = {
-//     iterations: iterations,
-//     duration: duration,
-//     direction: 'reverse',
-// };
+const options2 = {
+    iterations: iterations,
+    duration: duration,
+    direction: 'reverse',
+};
 
-// TODO: Add polyfills
-//  - KeyframeEffect
-//
-// const keyframes = new KeyframeEffect(cranks, effects, options);
-// const crankMotion = new Animation(keyframes, timeline);
-const animations = [];
-const driveAnimations = [];
+const groupDrive = new GroupEffect([
+    new KeyframeEffect(cranks, keyframes, options)
+]);
+console.log(groupDrive);
+// const driveAnimations = [];
+// const crankMotion = cranks.animate(keyframes, options);
 
-const crankMotion = cranks.animate(effects, options);
-
-driveAnimations.push(crankMotion);
-animations.push(crankMotion);
+// driveAnimations.push(crankMotion);
 
 pedals.forEach(pedal => {
-    const pedalOptions = Object.assign({}, options, {
-        direction: 'reverse'
-    });
-    const pedalMotion = pedal.animate(effects, pedalOptions);
+    // const pedalOptions = Object.assign({}, options, {
+    //     direction: 'reverse'
+    // });
+    // const pedalMotion = pedal.animate(keyframes, pedalOptions);
+    const pedalMotion = new KeyframeEffect(pedal, keyframes, options2);
 
-    animations.push(pedalMotion);
-    driveAnimations.push(pedalMotion);
+    groupDrive.children.push(pedalMotion);
 });
 
-const getGearSize = (location) => {
+const driveAnimations = new Animation(groupDrive, timeline);
+
+const getAnimations = () => {
+    return document.getAnimations ? document.getAnimations() : timeline.getAnimations();
+};
+
+const getGearSize = location => {
     const derailleur = document.querySelector(`.derailleur-${location}`);
     const gear = document.querySelector(`.gear-${location}`);
     const index = parseInt(derailleur.value, 10) - 1;
@@ -88,13 +92,16 @@ const initWheel = () => {
     const pbr = getCadence(1);
 
     wheelMotion.playbackRate = pbr;
-    animations.push(wheelMotion);
 };
 
 const buttonHandler = event => {
-    // const anims = document.getAnimations ? document.getAnimations() : timeline.getAnimations();
+    const anims = getAnimations();
 
-    animations.forEach(anim => {
+    if (!anims || !anims.length) {
+        return;
+    }
+
+    anims.forEach(anim => {
         switch (event.target.innerHTML.toLowerCase()) {
             case 'play':
                 anim.play();
@@ -109,16 +116,10 @@ const buttonHandler = event => {
     });
 };
 
-const setCadence = range => {
-    console.log('setRPM', range.target.value);
+const getSpeed = rate => {
+    const kmph = ((rate * wheelCircumference) / 1000) * 60;
 
-    const rpmIn = range.target.value;
-
-    driveAnimations.forEach(anim => {
-        anim.playbackRate = rpmIn;
-    });
-
-    setRPM(null, rpmIn);
+    return kmph.toFixed(2);
 };
 
 const setRPM = (originalEvent, input) => {
@@ -134,16 +135,20 @@ const setRPM = (originalEvent, input) => {
         Speed: ${outputSpeed} kmh`;
 };
 
-const getSpeed = rate => {
-    const kmph = ((rate * wheelCircumference) / 1000) * 60;
+const setCadence = range => {
+    console.log('setRPM', range.target.value);
 
-    return kmph.toFixed(2);
+    const rpmIn = range.target.value;
+
+    driveAnimations.effect.children.forEach(anim => {
+        anim.playbackRate = rpmIn;
+    });
+
+    setRPM(null, rpmIn);
 };
 
-const wheelMotion = wheel.animate(effects, options);
-
-initWheel();
-setRPM();
+const wheelKeyframes = new KeyframeEffect(wheel, keyframes, options);
+const wheelMotion = new Animation(wheelKeyframes, timeline);
 
 const initListeners = () => {
     btns.forEach(btn => {
@@ -154,4 +159,12 @@ const initListeners = () => {
     rangeSpeed.addEventListener('change', setCadence.bind(this), false);
 };
 
-document.addEventListener('DOMContentLoaded', initListeners);
+const init = () => {
+    initListeners();
+
+    initWheel();
+
+    setRPM();
+};
+
+document.addEventListener('DOMContentLoaded', init);
